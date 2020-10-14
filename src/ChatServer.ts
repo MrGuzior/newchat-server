@@ -1,0 +1,69 @@
+import * as express from 'express';
+import * as socketIo from 'socket.io';
+import { ChatEvent } from './constants';
+import { createServer, Server, get } from 'http';
+import {User, Message} from './types'
+import {getUsers, getUser,addUser,disconnectUser} from './Users/users'
+import {signIn, sendMessage, handleDisconnect, handlePing, handleUserIsTyping} from './Actions/SocketActions'
+
+const cors = require('cors');
+
+export class ChatServer {
+    public static readonly PORT: number = 8080;
+    private _app: express.Application;
+    private server: Server;
+    private io: SocketIO.Server;
+    private port: string | number;
+
+    constructor() {
+        this._app = express();
+        this.port = process.env.PORT || ChatServer.PORT;
+        this._app.use(cors());
+        this._app.options('*', cors());
+        this.server = createServer(this._app);
+        this.initSocket();
+        this.listen();
+    }
+
+    private initSocket(): void {
+        this.io = socketIo(this.server,{
+            pingInterval: 10000,
+        });
+    }
+
+    private listen(): void {
+        this.server.listen(this.port, () => {
+            console.log('Running server on port: ', this.port);
+        });
+
+        this.io.on(ChatEvent.CONNECT, (socket: SocketIO.Socket)=>{
+            console.log(`Client ${socket.id} connected on port: `, this.port);
+            socket.on(ChatEvent.SIGNIN, (user:User, callback: (s:string)=>void)=>signIn(socket,this.io,user, callback))
+            socket.on(ChatEvent.MESSAGE, (message:Message):void=>sendMessage(this.io,message))
+            socket.on(ChatEvent.DISCONNECT, ():void=>handleDisconnect(this.io,socket.id))
+            //socket.on(ChatEvent.PING, (string:string):void=>handlePing(this.io,socket.id))
+            socket.on(ChatEvent.IDLETIMEOUT, ()=>handleDisconnect(this.io,socket.id,true))
+            socket.on(ChatEvent.TYPING, ()=>handleUserIsTyping(this.io,socket.id))
+        })
+
+        process.once("SIGTERM", () => {
+            this.server.close(() => {
+                this.io.close(() => {
+                    process.exit(0);
+                });
+            });
+        });
+
+        process.once("SIGINT", () => {
+            this.server.close(() => {
+                this.io.close(() => {
+                    process.exit(0);
+                });
+            });
+        });
+    }
+
+    get app(): express.Application {
+        return this._app;
+    }
+}
