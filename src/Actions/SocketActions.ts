@@ -1,6 +1,5 @@
 import {User, Message} from '../types'
 import {getUsers, getUser,addUser,disconnectUser, checkUsernameAvailibility, getUsername} from '../Users/users'
-import { isObject } from 'util'
 
 export const signIn = (socket:SocketIO.Socket,io:SocketIO.Server,user:User, callback: (s:string, users:User[]|null)=>void)=>{
     console.log(`Client ${user.username} trying to sign in`)
@@ -24,7 +23,6 @@ export const sendMessage = (io: SocketIO.Server, message: Message): void => {
 
 export const handleDisconnect = (io:SocketIO.Server,id: string, timeout:boolean = false): void => {
     const username:string = getUsername(id)
-   // console.log(`Client ${id} disconnecting`)
     if(username){
         io.emit('message',{
             id: 123,
@@ -40,16 +38,8 @@ export const handleDisconnect = (io:SocketIO.Server,id: string, timeout:boolean 
 export const handleUserIsTyping = (io:SocketIO.Server, id: string): void => {
     const username:string = getUsername(id)
     if(username){
-        io.emit('message',{
-            id: 123,
-            username: 'Server',
-            message: `${username} is typing`,
-            timeStamp: Date.now(),
+        io.emit('isTyping',{
+            username: username
         })
     }
-}
-
-export const handlePing = (io:SocketIO.Server, id:string):void => {
-    console.log('sending users')
-    io.emit('userList', getUsers())
 }

@@ -4,7 +4,6 @@ export enum ChatEvent {
     MESSAGE = 'message',
     SIGNIN = 'signIn',
     ACTIVEPING = 'activePing',
-    PING = 'ping',
     IDLETIMEOUT = 'idleTimeout',
     TYPING = 'typing'
 }

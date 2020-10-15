@@ -1,10 +1,9 @@
 import * as express from 'express';
 import * as socketIo from 'socket.io';
 import { ChatEvent } from './constants';
-import { createServer, Server, get } from 'http';
+import { createServer, Server} from 'http';
 import {User, Message} from './types'
-import {getUsers, getUser,addUser,disconnectUser} from './Users/users'
-import {signIn, sendMessage, handleDisconnect, handlePing, handleUserIsTyping} from './Actions/SocketActions'
+import {signIn, sendMessage, handleDisconnect, handleUserIsTyping} from './Actions/SocketActions'
 
 const cors = require('cors');
 
@@ -38,10 +37,10 @@ export class ChatServer {
 
         this.io.on(ChatEvent.CONNECT, (socket: SocketIO.Socket)=>{
             console.log(`Client ${socket.id} connected on port: `, this.port);
+
             socket.on(ChatEvent.SIGNIN, (user:User, callback: (s:string)=>void)=>signIn(socket,this.io,user, callback))
             socket.on(ChatEvent.MESSAGE, (message:Message):void=>sendMessage(this.io,message))
             socket.on(ChatEvent.DISCONNECT, ():void=>handleDisconnect(this.io,socket.id))
-            //socket.on(ChatEvent.PING, (string:string):void=>handlePing(this.io,socket.id))
             socket.on(ChatEvent.IDLETIMEOUT, ()=>handleDisconnect(this.io,socket.id,true))
             socket.on(ChatEvent.TYPING, ()=>handleUserIsTyping(this.io,socket.id))
         })
