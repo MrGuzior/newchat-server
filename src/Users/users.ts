@@ -37,6 +37,13 @@ const usersSlice = {
                 username = usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].username || 'User'
             }catch(err){}
             return username
+        },
+        setIsTyping: (id:string): void => {
+            usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping = true
+            
+        },
+        unsetIsTyping: (id:string):void => {
+            usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping = false
         }  
     }
 }
@@ -45,7 +52,7 @@ export const getUsers = () => usersSlice.state.users
 
 export const getUser = (id:string) => usersSlice.state.users.filter(user => user.id === id)
 
-export const {addUser, disconnectUser, checkUsernameAvailibility, getUsername} = usersSlice.actions
+export const {addUser, disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping} = usersSlice.actions
 
 function removeFromArray(arr:User[], id:string) { 
     return arr.filter((user)=>{ return user.id != id; });
