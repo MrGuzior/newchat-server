@@ -4,6 +4,7 @@ import { ChatEvent } from './constants';
 import { createServer, Server} from 'http';
 import {User, Message} from './types'
 import {signIn, sendMessage, handleDisconnect, handleUserIsTyping} from './Actions/SocketActions'
+import logger from './logger'
 
 const cors = require('cors');
 
@@ -32,11 +33,13 @@ export class ChatServer {
 
     private listen(): void {
         this.server.listen(this.port, () => {
-            console.log('Running server on port: ', this.port);
+            //console.log('Running server on port: ', this.port);
+            logger.info('Running server on port: ', this.port)
         });
-
+        
         this.io.on(ChatEvent.CONNECT, (socket: SocketIO.Socket)=>{
-            console.log(`Client ${socket.id} connected on port: `, this.port);
+            //console.log(`Client ${socket.id} connected on port: `, this.port);
+            logger.info(`Client ${socket.id} connected on port: `, this.port)
 
             socket.on(ChatEvent.SIGNIN, (user:User, callback: (s:string)=>void)=>signIn(socket,this.io,user, callback))
             socket.on(ChatEvent.MESSAGE, (message:Message):void=>sendMessage(this.io,socket.id,message))
@@ -48,6 +51,8 @@ export class ChatServer {
         process.once("SIGTERM", () => {
             this.server.close(() => {
                 this.io.close(() => {
+                    logger.info('Server shutting down')
+                    logger.info('END LOG')
                     process.exit(0);
                 });
             });
@@ -56,6 +61,8 @@ export class ChatServer {
         process.once("SIGINT", () => {
             this.server.close(() => {
                 this.io.close(() => {
+                    logger.info('Server shutting down')
+                    logger.info('END LOG')
                     process.exit(0);
                 });
             });

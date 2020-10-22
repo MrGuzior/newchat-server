@@ -1,4 +1,5 @@
 import {User} from '../types'
+import logger from '../logger'
 
 interface UsersType {
     users: User[],
@@ -35,7 +36,9 @@ const usersSlice = {
             let username:string
             try{
                 username = usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].username || 'User'
-            }catch(err){}
+            }catch(err){
+                logger.error(err)
+            }
             return username
         },
         setIsTyping: (id:string): void => {
