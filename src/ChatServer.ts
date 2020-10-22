@@ -39,7 +39,7 @@ export class ChatServer {
             console.log(`Client ${socket.id} connected on port: `, this.port);
 
             socket.on(ChatEvent.SIGNIN, (user:User, callback: (s:string)=>void)=>signIn(socket,this.io,user, callback))
-            socket.on(ChatEvent.MESSAGE, (message:Message):void=>sendMessage(this.io,message))
+            socket.on(ChatEvent.MESSAGE, (message:Message):void=>sendMessage(this.io,socket.id,message))
             socket.on(ChatEvent.DISCONNECT, ():void=>handleDisconnect(this.io,socket.id))
             socket.on(ChatEvent.IDLETIMEOUT, ()=>handleDisconnect(this.io,socket.id,true))
             socket.on(ChatEvent.TYPING, ()=>handleUserIsTyping(this.io,socket.id))
