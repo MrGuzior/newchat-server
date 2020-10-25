@@ -37,16 +37,24 @@ const usersSlice = {
             try{
                 username = usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].username || 'User'
             }catch(err){
-                logger.error(err)
+                logger.error('Error getting username')
             }
             return username
         },
         setIsTyping: (id:string): void => {
-            usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping = true
+            try{
+                usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping = true
+            }catch(err){
+                logger.error('Error setting isTyping')
+            }
             
         },
         unsetIsTyping: (id:string):void => {
-            usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping = false
+            try{
+                usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping = false
+            }catch(err){
+                logger.error('Error unsetting isTyping')
+            }
         }  
     }
 }

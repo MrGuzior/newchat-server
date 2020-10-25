@@ -34,12 +34,12 @@ export class ChatServer {
     private listen(): void {
         this.server.listen(this.port, () => {
             //console.log('Running server on port: ', this.port);
-            logger.info('Running server on port: ', this.port)
+            logger.info(`Running server on port: ${this.port}`)
         });
         
         this.io.on(ChatEvent.CONNECT, (socket: SocketIO.Socket)=>{
             //console.log(`Client ${socket.id} connected on port: `, this.port);
-            logger.info(`Client ${socket.id} connected on port: `, this.port)
+            logger.info(`Client ${socket.id} connected on port: ${this.port}`)
 
             socket.on(ChatEvent.SIGNIN, (user:User, callback: (s:string)=>void)=>signIn(socket,this.io,user, callback))
             socket.on(ChatEvent.MESSAGE, (message:Message):void=>sendMessage(this.io,socket.id,message))

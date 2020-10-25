@@ -15,6 +15,6 @@ if (process.env.NODE_ENV !== 'production') {
     }));
   }
 
-logger.info('Start log')
+logger.info('START LOG')
 
 export default logger

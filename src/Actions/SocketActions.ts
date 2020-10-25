@@ -23,8 +23,6 @@ export const signIn = (socket:SocketIO.Socket,io:SocketIO.Server,user:User, call
 }
 
 export const sendMessage = (io: SocketIO.Server,id:string, message: Message): void => {
-    //console.log(`Client ${message.username} said ${message.message}`)
-
     unsetIsTyping(id)
     io.emit('userList', getUsers())
     io.emit('message', message)
