@@ -28,6 +28,10 @@ export class ChatServer {
 
         //this._app.options('*', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }));
 
+        this._app.get('/test', function (req, res) {
+            res.send('hello world from the server')
+          })
+
         this._app.set('Access-Control-Allow-Origin','https://wizardly-mccarthy-d0859c.netlify.app')
 
 
