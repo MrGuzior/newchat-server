@@ -21,7 +21,7 @@ export class ChatServer {
         this._app.use(cors({
             origin: ['http://localhost:3000', 'https://wizardly-mccarthy-d0859c.netlify.app/']
         }));
-        this._app.options('*', cors());
+        //this._app.options('*', cors());
         this.server = createServer(this._app);
         this.initSocket();
         this.listen();
