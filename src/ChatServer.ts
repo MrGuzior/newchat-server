@@ -19,14 +19,14 @@ export class ChatServer {
     constructor() {
         this._app = express();
         this.port = process.env.PORT || ChatServer.PORT;
-        this._app.use(cors({
-            origin: ['http://localhost:3000', 'https://wizardly-mccarthy-d0859c.netlify.app']
-        }));
-        this._app.use(createProxyMiddleware({ target: 'https://wizardly-mccarthy-d0859c.netlify.app', changeOrigin: true }))
+        // this._app.use(cors({
+        //     origin: ['http://localhost:3000', 'https://wizardly-mccarthy-d0859c.netlify.app']
+        // }));
+        // this._app.use(createProxyMiddleware({ target: 'https://wizardly-mccarthy-d0859c.netlify.app', changeOrigin: true }))
 
-        this._app.options('*', cors());
+        // this._app.options('*', cors());
 
-        //this._app.set('Access-Control-Allow-Origin','https://wizardly-mccarthy-d0859c.netlify.app')
+        this._app.set('Access-Control-Allow-Origin','https://wizardly-mccarthy-d0859c.netlify.app')
 
         this._app.use('/', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }))
         this.server = createServer(this._app);
