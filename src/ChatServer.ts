@@ -30,8 +30,14 @@ export class ChatServer {
     private initSocket(): void {
         this.io = socketIo(this.server,{
             pingInterval: 10000,
-            origins: '*:*'
+            //origins: '*:*'
         });
+        this.io.origins((origin, callback) => {
+            if (origin !== 'https://wizardly-mccarthy-d0859c.netlify.app/') {
+              return callback('origin not allowed', false);
+            }
+            callback(null, true);
+          });
         //this.io.origins('*:*')
     }
 
