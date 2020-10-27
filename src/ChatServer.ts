@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as socketIo from 'socket.io';
 import { ChatEvent } from './constants';
 import { createServer, Server} from 'http';
-import { createProxyMiddleware } from 'http-proxy-middleware'
 import {User, Message} from './types'
 import {signIn, sendMessage, handleDisconnect, handleUserIsTyping} from './Actions/SocketActions'
 import logger from './logger'
@@ -19,28 +18,8 @@ export class ChatServer {
     constructor() {
         this._app = express();
         this.port = process.env.PORT || ChatServer.PORT;
-        // this._app.use(cors({
-        //     origin: ['http://localhost:3000', 'https://wizardly-mccarthy-d0859c.netlify.app']
-        // }));
-        // this._app.use(createProxyMiddleware('/',{ 
-        //     target: 'https://wizardly-mccarthy-d0859c.netlify.app', 
-        //     changeOrigin: true,
-        //     headers:{
-        //         'Access-Control-Allow-Origin': 'https://wizardly-mccarthy-d0859c.netlify.app'
-        //     }
-        // }))
-        
-        this._app.use(cors({ origin: '*' }))
-
-        //this._app.options('*', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }));
-
-        // this._app.get('/test', function (req, res) {
-        //     res.send('hello world from the server')
-        //   })
-
-        // this._app.set('Access-Control-Allow-Origin','https://wizardly-mccarthy-d0859c.netlify.app')
-
-
+        this._app.use(cors());
+        this._app.options('*', cors());
         this.server = createServer(this._app);
         this.initSocket();
         this.listen();
@@ -49,10 +28,7 @@ export class ChatServer {
     private initSocket(): void {
         this.io = socketIo(this.server,{
             pingInterval: 10000,
-            origins: '*:*'
         });
-
-        this.io.origins(['https://wizardly-mccarthy-d0859c.netlify.app'])
     }
 
     private listen(): void {
@@ -97,3 +73,4 @@ export class ChatServer {
         return this._app;
     }
 }
+
