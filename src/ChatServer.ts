@@ -30,7 +30,7 @@ export class ChatServer {
             }
         }))
         
-        this._app.use('/', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }))
+        this._app.use(cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }))
 
         //this._app.options('*', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }));
 
