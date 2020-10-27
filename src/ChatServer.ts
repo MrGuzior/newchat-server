@@ -30,8 +30,9 @@ export class ChatServer {
     private initSocket(): void {
         this.io = socketIo(this.server,{
             pingInterval: 10000,
+            origins: '*:*'
         });
-        this.io.origins('*:*')
+        //this.io.origins('*:*')
     }
 
     private listen(): void {
