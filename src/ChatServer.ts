@@ -19,7 +19,19 @@ export class ChatServer {
         this._app = express();
         this.port = process.env.PORT || ChatServer.PORT;
         this._app.use(cors());
-        this._app.options('*', cors());
+        this._app.options('*', cors({
+            allowedHeaders: [
+              'Origin',
+              'X-Requested-With',
+              'Content-Type',
+              'Accept',
+              'X-Access-Token',
+            ],
+            credentials: true,
+            methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+            origin: 'https://wizardly-mccarthy-d0859c.netlify.app/',
+            preflightContinue: false,
+          }));
         this.server = createServer(this._app);
         this.initSocket();
         this.listen();
