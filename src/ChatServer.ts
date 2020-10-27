@@ -22,23 +22,23 @@ export class ChatServer {
         // this._app.use(cors({
         //     origin: ['http://localhost:3000', 'https://wizardly-mccarthy-d0859c.netlify.app']
         // }));
-        this._app.use(createProxyMiddleware('/',{ 
-            target: 'https://wizardly-mccarthy-d0859c.netlify.app', 
-            changeOrigin: true,
-            headers:{
-                'Access-Control-Allow-Origin': 'https://wizardly-mccarthy-d0859c.netlify.app'
-            }
-        }))
+        // this._app.use(createProxyMiddleware('/',{ 
+        //     target: 'https://wizardly-mccarthy-d0859c.netlify.app', 
+        //     changeOrigin: true,
+        //     headers:{
+        //         'Access-Control-Allow-Origin': 'https://wizardly-mccarthy-d0859c.netlify.app'
+        //     }
+        // }))
         
         this._app.use(cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }))
 
         //this._app.options('*', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }));
 
-        this._app.get('/test', function (req, res) {
-            res.send('hello world from the server')
-          })
+        // this._app.get('/test', function (req, res) {
+        //     res.send('hello world from the server')
+        //   })
 
-        this._app.set('Access-Control-Allow-Origin','https://wizardly-mccarthy-d0859c.netlify.app')
+        // this._app.set('Access-Control-Allow-Origin','https://wizardly-mccarthy-d0859c.netlify.app')
 
 
         this.server = createServer(this._app);
