@@ -33,7 +33,7 @@ export class ChatServer {
             //origins: '*:*'
         });
         this.io.origins((origin, callback) => {
-            if (origin !== 'https://wizardly-mccarthy-d0859c.netlify.app/') {
+            if (origin !== 'https://wizardly-mccarthy-d0859c.netlify.app') {
               return callback('origin not allowed', false);
             }
             callback(null, true);
