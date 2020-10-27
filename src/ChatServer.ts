@@ -38,7 +38,7 @@ export class ChatServer {
             }
             callback(null, true);
           });
-        //this.io.origins('*:*')
+        this.io.origins(['https://wizardly-mccarthy-d0859c.netlify.app'])
     }
 
     private listen(): void {
