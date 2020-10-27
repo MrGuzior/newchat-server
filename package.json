@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm i && ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "prod": "npm i && ts-node-dev --respawn --transpile-only ./src/server.ts",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "prod": "tsc && node ./src/server.ts"
+    "start": "tsc && node ./src/server.ts"
   },
   "keywords": [],
   "author": "",
