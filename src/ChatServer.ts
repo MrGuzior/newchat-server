@@ -39,7 +39,7 @@ export class ChatServer {
     private initSocket(): void {
         this.io = socketIo(this.server,{
             pingInterval: 10000,
-            //origins: '*:*'
+            origins: '*:*'
         });
 
         this.io.origins(['https://wizardly-mccarthy-d0859c.netlify.app'])
