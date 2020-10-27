@@ -19,7 +19,7 @@ export class ChatServer {
         this._app = express();
         this.port = process.env.PORT || ChatServer.PORT;
         this._app.use(cors());
-        this._app.options('*', cors());
+        this._app.options(cors({origin:'https://wizardly-mccarthy-d0859c.netlify.app/'}));
         this.server = createServer(this._app);
         this.initSocket();
         this.listen();
