@@ -22,7 +22,13 @@ export class ChatServer {
         // this._app.use(cors({
         //     origin: ['http://localhost:3000', 'https://wizardly-mccarthy-d0859c.netlify.app']
         // }));
-        // this._app.use(createProxyMiddleware({ target: 'https://wizardly-mccarthy-d0859c.netlify.app', changeOrigin: true }))
+        this._app.use(createProxyMiddleware('/',{ 
+            target: 'https://wizardly-mccarthy-d0859c.netlify.app', 
+            changeOrigin: true,
+            headers:{
+                'Access-Control-Allow-Origin': 'https://wizardly-mccarthy-d0859c.netlify.app'
+            }
+        }))
         
         this._app.use('/', cors({ origin: 'https://wizardly-mccarthy-d0859c.netlify.app' }))
 
