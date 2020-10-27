@@ -18,7 +18,7 @@ export class ChatServer {
     constructor() {
         this._app = express();
         this.port = process.env.PORT || ChatServer.PORT;
-        this._app.use(cors());
+        this._app.use(cors({origin:'https://wizardly-mccarthy-d0859c.netlify.app/'}));
         this._app.options('*', cors({
             allowedHeaders: [
               'Origin',
