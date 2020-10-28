@@ -45,12 +45,13 @@ export const handleDisconnect = (io:SocketIO.Server,id: string, timeout:boolean 
 }
 
 export const handleUserIsTyping = (io:SocketIO.Server, id: string): void => {
-
+    const user:any = getUser(id)
+    if(!user.isTyping){
         setIsTyping(id)
         io.emit('userList', getUsers())
         setTimeout(()=>{
             unsetIsTyping(id)
             io.emit('userList', getUsers())
         },4000)
-    
+    }
 }
