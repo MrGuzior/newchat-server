@@ -3,8 +3,6 @@ import {getUsers, getUser,addUser,disconnectUser, checkUsernameAvailibility, get
 import logger from '../logger'
 
 export const signIn = (socket:SocketIO.Socket,io:SocketIO.Server,user:User, callback: (s:string, users:User[]|null)=>void)=>{
-    //console.log(`Client ${user.username} trying to sign in`)
-    
     if(!checkUsernameAvailibility(user.username)){
         io.emit('message', {
             id: 123,

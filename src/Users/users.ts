@@ -2,8 +2,7 @@ import {User} from '../types'
 import logger from '../logger'
 
 interface UsersType {
-    users: User[],
-    
+    users: User[]
 }
 
 const initialState: UsersType = {
@@ -23,7 +22,7 @@ const usersSlice = {
                 connected: true,
                 isTyping: false
             }
-            usersSlice.state.users.push(newUser)
+            usersSlice.state.users = [...usersSlice.state.users, newUser]
             return newUser
         },
         disconnectUser: (id: string): void => {
