@@ -4,7 +4,7 @@ import { ChatEvent } from './constants';
 import { createServer, Server} from 'http';
 import {User, Message} from '../types/types'
 import {signIn, sendMessage, handleDisconnect, handleUserIsTyping} from '../Actions'
-import {pintIntervalTime} from '../../config/config'
+import {pintIntervalTime} from '../config/config'
 import logger from '../logger/logger'
 
 const cors = require('cors');
