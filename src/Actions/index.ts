@@ -1,6 +1,7 @@
-import {User, Message} from '../types'
-import {getUsers, getUser,addUser,disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping} from '../Users/users'
-import logger from '../logger'
+import {User, Message} from '../types/types'
+import {getUsers, getUser,addUser,disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping, getIsTyping} from '../Users'
+import {isTypingTimeoutTime} from '../config/config'
+import logger from '../logger/logger'
 
 export const signIn = (socket:SocketIO.Socket,io:SocketIO.Server,user:User, callback: (s:string, users:User[]|null)=>void)=>{
     if(!checkUsernameAvailibility(user.username)){
@@ -43,13 +44,14 @@ export const handleDisconnect = (io:SocketIO.Server,id: string, timeout:boolean 
 }
 
 export const handleUserIsTyping = (io:SocketIO.Server, id: string): void => {
-    const user:any = getUser(id)
-    if(!user.isTyping){
+    const userTyping = getIsTyping(id)
+    if(!userTyping){
+        console.log(userTyping)
         setIsTyping(id)
         io.emit('userList', getUsers())
         setTimeout(()=>{
             unsetIsTyping(id)
             io.emit('userList', getUsers())
-        },4000)
+        },isTypingTimeoutTime)
     }
 }

@@ -2,9 +2,10 @@ import * as express from 'express';
 import * as socketIo from 'socket.io';
 import { ChatEvent } from './constants';
 import { createServer, Server} from 'http';
-import {User, Message} from './types'
-import {signIn, sendMessage, handleDisconnect, handleUserIsTyping} from './Actions/SocketActions'
-import logger from './logger'
+import {User, Message} from '../types/types'
+import {signIn, sendMessage, handleDisconnect, handleUserIsTyping} from '../Actions'
+import {pintIntervalTime} from '../config/config'
+import logger from '../logger/logger'
 
 const cors = require('cors');
 
@@ -27,7 +28,7 @@ export class ChatServer {
 
     private initSocket(): void {
         this.io = socketIo(this.server,{
-            pingInterval: 10000,
+            pingInterval: pintIntervalTime,
         });
     }
 

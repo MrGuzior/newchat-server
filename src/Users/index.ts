@@ -1,5 +1,5 @@
-import {User} from '../types'
-import logger from '../logger'
+import {User} from '../types/types'
+import logger from '../logger/logger'
 
 interface UsersType {
     users: User[]
@@ -54,7 +54,16 @@ const usersSlice = {
             }catch(err){
                 logger.error('Error unsetting isTyping')
             }
-        }  
+        },
+        getIsTyping: (id:string):boolean => {
+            let isTyping:boolean
+            try{
+                isTyping = usersSlice.state.users[usersSlice.state.users.findIndex(user => user.id === id)].isTyping
+            }catch(err){
+                logger.error('Error getting value of isTyping')
+            }
+            return isTyping
+        }
     }
 }
 
@@ -62,7 +71,7 @@ export const getUsers = () => usersSlice.state.users
 
 export const getUser = (id:string) => usersSlice.state.users.filter(user => user.id === id)
 
-export const {addUser, disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping} = usersSlice.actions
+export const {addUser, disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping, getIsTyping} = usersSlice.actions
 
 function removeFromArray(arr:User[], id:string) { 
     return arr.filter((user)=>{ return user.id != id; });
