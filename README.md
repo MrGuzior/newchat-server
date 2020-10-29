@@ -4,7 +4,7 @@
 
 [Client github repository](https://github.com/MrGuzior/newchat-client)
 
-A chat app for browser desktop use (Not optimized for mobile screens). Server is written in TypeScript Note enviroment using Express and Socket.IO.
+A chat app for browser desktop use (Not optimized for mobile screens). Server is written in TypeScript Node enviroment using Express and Socket.IO.
 
 ## Install and Run
 
