@@ -1,6 +1,6 @@
 import {User, Message} from '../types/types'
 import {getUsers, getUser,addUser,disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping, getIsTyping} from '../Users'
-import {isTypingTimeoutTime} from '../config/config'
+import {isTypingTimeoutTime} from '../../config/config'
 import logger from '../logger/logger'
 
 export const signIn = (socket:SocketIO.Socket,io:SocketIO.Server,user:User, callback: (s:string, users:User[]|null)=>void)=>{
