@@ -1,4 +1,4 @@
-# New Chat (<SaltChat/>)
+# New Chat (SaltChat)
 
 [Live version](https://wizardly-mccarthy-d0859c.netlify.app/) _Might take a minute for the server to wake up_
 
