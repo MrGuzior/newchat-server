@@ -22,10 +22,12 @@ export const signIn = (socket:SocketIO.Socket,io:SocketIO.Server,user:User, call
 }
 
 export const sendMessage = (io: SocketIO.Server,id:string, message: Message): void => {
-    unsetIsTyping(id)
-    io.emit('userList', getUsers())
-    io.emit('message', message)
-    logger.info(`Client ${message.username} said ${message.message}`)
+    if(message.message !== ''){
+        unsetIsTyping(id)
+        io.emit('userList', getUsers())
+        io.emit('message', message)
+        logger.info(`Client ${message.username} said ${message.message}`)
+    }
 }
 
 export const handleDisconnect = (io:SocketIO.Server,id: string, timeout:boolean = false): void => {
@@ -46,7 +48,6 @@ export const handleDisconnect = (io:SocketIO.Server,id: string, timeout:boolean 
 export const handleUserIsTyping = (io:SocketIO.Server, id: string): void => {
     const userTyping = getIsTyping(id)
     if(!userTyping){
-        console.log(userTyping)
         setIsTyping(id)
         io.emit('userList', getUsers())
         setTimeout(()=>{
