@@ -1,5 +1,5 @@
 import {User, Message} from '../types/types'
-import {getUsers, getUser,addUser,disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping, getIsTyping} from '../Users'
+import {getUsers,addUser,disconnectUser, checkUsernameAvailibility, getUsername, setIsTyping, unsetIsTyping, getIsTyping} from '../Users'
 import {isTypingTimeoutTime} from '../config/config'
 import logger from '../logger/logger'
 
